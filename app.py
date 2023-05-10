@@ -8,6 +8,9 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 @app.route("/")
 def home():
     return render_template("home.html")
+    # if logged in, redirect to dashboard
+    # return render_template("dashboard.html")
+
 
 @app.route("/settings")
 def settings():
