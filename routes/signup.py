@@ -12,9 +12,8 @@ def signup():
         password = request.form["password"]
         hashed_password = generate_password_hash(password) 
 
-        flash("Account created successfully!", "success")
-        # print("Account created successfully!", "success")
+        # create user in database
 
-        return redirect(url_for("login.login"))
+        return redirect(url_for("login.login", registered=True))
 
     return render_template("signup.html")
