@@ -6,12 +6,16 @@ app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 @app.route("/")
-def hello_world():
-    return render_template("index.html")
+def home():
+    return render_template("home.html")
 
 @app.route("/settings")
 def settings():
     return render_template("settings.html")
+
+@app.route("/account")
+def saccount():
+    return render_template("account.html")
 
 
 
