@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}TieNexa: Copywriter - Password Reset{% endblock %}
+{% block content %}
+
+
+<div class="container my-5">
+  <div class="form-reset w-100 m-auto" style="max-width: 400px;">
+    <form method="post">
+
+      <div class="form-floating mb-3">
+        <input type="password" name="passwordA" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">New password:</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" name="passwordB" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Repeat new password:</label>
+      </div>
+
+      <input class="w-100 btn btn-lg btn-primary" type="submit" value="Signup">
+    
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

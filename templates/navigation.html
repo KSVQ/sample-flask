@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary rounded" aria-label="TieNexa NavBar">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11" aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+        <a class="navbar-brand col-lg-3 me-0" href="/">TieNexa</a>
+        <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+          <li class="nav-item"><a href="/" class="nav-link active px-2">Home</a></li>
+
+          {% if current_user.is_authenticated %}
+          <li class="nav-item"><a href="settings" class="nav-link px-2">Settings</a></li>
+          <li class="nav-item"><a href="account" class="nav-link px-2">Account</a></li>
+          {% endif %}
+
+          <li class="nav-item"><a href="pricing" class="nav-link px-2">Pricing</a></li>
+          <li class="nav-item"><a href="faq" class="nav-link px-2">FAQs</a></li>
+          <li class="nav-item"><a href="about" class="nav-link px-2">About</a></li>
+        </ul>
+        <div class="d-lg-flex col-lg-3 justify-content-lg-end">
+
+          {% if current_user.is_authenticated %}
+          <!-- Default dropstart button -->
+          <div class="btn-group dropstart">
+            <button type="button" class="btn btn-success" style="width: 38px; height: 38px; margin-left: 0.25rem; border-radius: 50%;" data-bs-toggle="dropdown" aria-expanded="false"></button>
+            <ul class="dropdown-menu dropdown-menu-end" style="min-width: 220px;">
+              <li class="dropdown-item">
+                <div><strong>{{ current_user.first_name }} {{ current_user.last_name }}</strong></div>
+                <div class="small">{{ current_user.email }}</div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="pricing">Pricing</a></li>
+              <li><a class="dropdown-item" href="faq">FAQs</a></li>
+              <li><a class="dropdown-item" href="about">About</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="dropdown-item">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                  <label class="form-check-label" for="flexSwitchCheckDefault">Switch to light theme</label>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{{ url_for('logout.logout') }}">Logout</a></li>
+            </ul>
+          </div>
+          {% else %}
+          <!-- Show the login and signup links if the user is not logged in -->
+          <a href="{{ url_for('login.login') }}" class="btn btn-outline-primary me-2">Login</a>
+          <a href="{{ url_for('signup.signup') }}" class="btn btn-primary">FREE Sign-up</a>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </nav>

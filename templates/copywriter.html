@@ -1,0 +1,74 @@
+{% extends 'dashbase.html' %}
+{% block title %}TieNexa: Copywriter - Dashboard{% endblock %}
+{% block content %}
+
+
+
+
+<div class="container-fluid pb-3 my-3">
+    <div class="d-grid gap-3" style="grid-template-columns: 1fr 3fr 1fr;">
+  
+      <!-- Left Column -->
+      <div class="bg-body-tertiary border rounded-3 p-3">
+  
+          <div class="border-top mb-3" style="overflow-y: scroll; height: 220px;">
+              <div class="list-group rounded-0">
+                {% for file in data %}
+                  <div class="list-group-item border-top-0">
+                    <input class="form-check-input me-1" type="radio" name="preset" value="{{ file.file_name }}" id="{{ file.file_name }}">
+                    <label class="form-check-label" for="{{ file.file_name }}">{{ file.clean_file_name }}</label>
+                  </div>
+                {% endfor %}
+              </div>
+          </div>
+  
+          <div class="border-top mb-3" style="overflow-y: scroll; height: 220px;">
+            <div class="list-group rounded-0">
+              {% for file in data %}
+                <div class="list-group-item border-top-0">
+                  <input class="form-check-input me-1" type="radio" name="temperature" value="{{ file.file_name }}" id="{{ file.file_name }}">
+                  <label class="form-check-label" for="{{ file.file_name }}">{{ file.clean_file_name }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          
+          <div class="border-top mb-3" style="overflow-y: scroll; height: 220px;">
+            <div class="list-group rounded-0">
+              {% for file in data %}
+                <div class="list-group-item border-top-0">
+                  <input class="form-check-input me-1" type="radio" name="role_model" value="{{ file.file_name }}" id="{{ file.file_name }}">
+                  <label class="form-check-label" for="{{ file.file_name }}">{{ file.clean_file_name }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+  
+      </div>
+  
+  
+      <!-- Middle Column -->
+      <div class="bg-body-tertiary border rounded-3 p-3">
+          <div class="form-floating">
+              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+              <label for="floatingTextarea2">Insert content: </label>
+          </div>
+      </div>
+  
+  
+    <!-- Right Column -->
+    <div class="bg-body-tertiary border rounded-3 p-3">
+        {% for i in range(1, 8) %}
+        <div class="text-bg-dark p-3">
+        <label for="customRange{{ i }}" class="form-label">Example range: {{ i }}</label>
+        <span class="range-value">0</span>
+        <input type="range" class="form-range" min="0" max="100" step="1" value="0" id="customRange{{ i }}">
+        </div>
+        {% endfor %}
+    </div>
+    
+    
+    </div>
+  </div>
+
+{% endblock %}
