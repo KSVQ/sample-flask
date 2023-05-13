@@ -10,9 +10,9 @@ class TnxDB:
         )
         self.cursor = self.conn.cursor()
 
-    def insert_user(self, first_name, last_name, email, password):
-        query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%s, %s, %s, %s)"
-        values = (first_name, last_name, email, password)
+    def insert_user(self, first_name, last_name, email, password, role, theme):
+        query = "INSERT INTO users (first_name, last_name, email, password, role, theme) VALUES (%s, %s, %s, %s, %s, %s)"
+        values = (first_name, last_name, email, password, role, theme)
         self.cursor.execute(query, values)
         self.conn.commit()
 
@@ -56,9 +56,28 @@ class TnxDB:
     def get_user_by_email(self, email):
         query = "SELECT * FROM users WHERE email = %s"
         values = (email,)
-        self.cursor.execute(query, values)
-        return self.cursor.fetchone()
+        try:
+            self.cursor.execute(query, values)
+            result = self.cursor.fetchone()
+            if result:
+                return result
+            else:
+                return None  # No user found with the given email
+        except Exception as e:
+            print(f"Error retrieving user by email: {e}")
+            return None  # Handle the exception by returning None or an appropriate value
 
+
+    def update_user_theme(self, user_id, theme):
+        query = "UPDATE users SET theme = %s WHERE id = %s"
+        values = (theme, user_id)
+        try:
+            self.cursor.execute(query, values)
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error updating user theme: {e}")
+            return False
 
 
 

@@ -1,36 +1,58 @@
 // Placeholder API call function
-function updateUserThemePreference(theme) {
-    // Implement API call to save the user's theme preference in the database.
-    console.log("API call to update user's theme preference to:", theme);
+  function updateUserThemePreference(theme) {
+    $.ajax({
+      url: '/api/set_theme',
+      type: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify({ theme: theme }),
+      success: function(data) {
+        console.log(data);
+        localStorage.setItem('theme', theme);
+      },
+      error: function(err) {
+        console.log(err);
+      },
+    });
+  }
+
+  function updateTheme(theme) {
+    $('html').attr('data-bs-theme', theme);
+    $('#flexSwitchCheckDefault').prop('checked', theme === 'light');
+    $('label[for="flexSwitchCheckDefault"]').text(theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
   }
 
   $(document).ready(function () {
-    const isLoggedIn = false; // Replace this with a check for the user's login status.
+    let isLoggedIn = false;
   
-    // Get theme preference from local storage or use the default theme.
-    const defaultTheme = 'dark';
-    let theme = isLoggedIn ? null : localStorage.getItem('theme') || defaultTheme;
-  
-    if (theme) {
-      $('html').attr('data-bs-theme', theme);
-      $('#flexSwitchCheckDefault').prop('checked', theme === 'light');
-      $('label[for="flexSwitchCheckDefault"]').text(theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
-    }
+    // First, get the theme from local storage (or use 'dark' if none is set)
+    let theme = localStorage.getItem('theme') || 'dark';
+    updateTheme(theme);
+
+    $.ajax({
+      url: '/api/logged_in',
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        isLoggedIn = true; // User is logged in
+        theme = data.theme; // Set the theme from user data
+        localStorage.setItem('theme', theme); // Update local storage
+        updateTheme(theme); // Update the theme based on server's response
+      },
+      error: function(err) {
+        console.log(err);
+      },
+    });
   
     $('#flexSwitchCheckDefault').on('change', function () {
-      const htmlElement = $('html');
-      const labelElement = $('label[for="flexSwitchCheckDefault"]');
       const isChecked = $(this).is(':checked');
-  
       theme = isChecked ? 'light' : 'dark';
   
-      htmlElement.attr('data-bs-theme', theme);
-      labelElement.text(isChecked ? 'Switch to dark theme' : 'Switch to light theme');
+      updateTheme(theme);
+      localStorage.setItem('theme', theme); // Update local storage on switch change
   
       if (isLoggedIn) {
         updateUserThemePreference(theme);
-      } else {
-        localStorage.setItem('theme', theme);
       }
     });
   });

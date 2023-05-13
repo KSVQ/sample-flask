@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+
+{% if current_user.is_authenticated %}
+<html data-bs-theme="{{ current_user.theme }}">
+{% else %}
 <html data-bs-theme="dark">
+{% endif %}
+    
     <head>
         {% include 'head.html' %}
     </head>
     <body>
     {% include 'navigation.html' %}
-
         
         {% block content %}{% endblock %}
         
